@@ -15,12 +15,14 @@ if (arguments.length === 0) {
 filenames.forEach((filename) => {
   var buffer = fs.readFileSync(filename);
   var originalEncoding = detectCharacterEncoding(buffer);
-  if (originalEncoding.encoding.includes('ISO')) {
-    buffer = legacy.decode(buffer, originalEncoding.encoding, { 'mode': 'fatal' });
-    fs.writeFileSync(filename, buffer, 'UTF-8');
-  } else {
+  try {
     var file = fs.readFileSync(filename, originalEncoding.encoding);
     fs.writeFileSync(filename, file, 'UTF-8');
+  } catch {
+    // Legacy encoding
+    buffer = legacy.decode(buffer, originalEncoding.encoding, { 'mode': 'fatal' });
+    fs.writeFileSync(filename, buffer, 'UTF-8');
+  } finally {
+    console.log(`Encoding successfully changed from ${originalEncoding.encoding} to UTF-8 for ${filename}.`);
   }
-  console.log(`Encoding successfully changed from ${originalEncoding.encoding} to UTF-8 for ${filename}.`);
 });
