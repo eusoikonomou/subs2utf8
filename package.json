@@ -1,0 +1,29 @@
+{
+  "name": "utf8-encoding-converter",
+  "version": "1.0.0",
+  "description": "Tool that changes file encoding to UTF8",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eusoikonomou/utf8-encoding-converter.git"
+  },
+  "keywords": [
+    "node",
+    "enconding",
+    "utf8",
+    "filesystem"
+  ],
+  "author": "Efstathios Oikonomou <eusoikonomou@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eusoikonomou/utf8-encoding-converter/issues"
+  },
+  "homepage": "https://github.com/eusoikonomou/utf8-encoding-converter#readme",
+  "dependencies": {
+    "detect-character-encoding": "^0.7.0",
+    "legacy-encoding": "^3.0.0"
+  }
+}
