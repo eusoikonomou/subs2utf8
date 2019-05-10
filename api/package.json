@@ -1,9 +1,10 @@
 {
-  "name": "utf8-encoding-converter",
+  "name": "subs2utf8-api",
   "version": "1.0.0",
   "description": "Tool that changes file encoding to UTF8",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,7 +24,13 @@
   },
   "homepage": "https://github.com/eusoikonomou/utf8-encoding-converter#readme",
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "detect-character-encoding": "^0.7.0",
-    "legacy-encoding": "^3.0.0"
+    "dotenv": "^8.0.0",
+    "express": "^4.16.4",
+    "helmet": "^3.18.0",
+    "legacy-encoding": "^3.0.0",
+    "log4js": "^4.1.1"
   }
 }
