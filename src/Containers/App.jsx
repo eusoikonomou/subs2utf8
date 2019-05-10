@@ -64,7 +64,7 @@ class App extends React.Component {
         />
         <Grid container className={classes.root} spacing={16} style={{ width: '100%', padding: 8 }}>
           <Grid item style={{ width: '100%' }} xs={12} sm={12}>
-            <Typography align="center">Welcome to Subs2UTF-8 Converter</Typography>
+            <Typography variant="h3" align="center">Convert any .srt file encoding to UTF-8!</Typography>
           </Grid>
           <Grid item style={{ width: '100%' }} xs={12}>
             <Dropzone />
