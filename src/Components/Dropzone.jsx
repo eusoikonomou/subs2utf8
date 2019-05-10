@@ -6,9 +6,8 @@ import {
 } from '@material-ui/core';
 import { CloudDownload } from '@material-ui/icons';
 
-const utf8 = require('utf8');
-// const legacy = require('legacy-encoding');
-// const detectCharacterEncoding = require('detect-character-encoding');
+const detect = require('charset-detector');
+const legacy = require('legacy-encoding');
 
 const styles = () => ({
   grow: {
@@ -34,21 +33,29 @@ class Dropzone extends React.Component {
   }
 
   onDownloadFile = file => () => {
-    console.log(file);
     const reader = new FileReader();
     reader.onload = (event) => {
-      const buffer = new TextEncoder('utf-8').encode(event.target.result);
-      console.log(buffer);
-      console.log(buffer.toString());
+      let buffer = Buffer.from(event.target.result);
+      const possibleEncodings = detect(buffer);
+      const encoding = possibleEncodings
+        .find(enc => enc.confidence === Math.max(...possibleEncodings
+          .map(possibleEncoding => possibleEncoding.confidence)));
+      buffer = legacy.decode(buffer, encoding.charsetName, { mode: 'fatal' });
+      const blob = new Blob([buffer.toString()], { type: 'text/plain;charset=utf-8' });
+      const url = window.URL.createObjectURL(blob);
+
+      const tempLink = document.createElement('a');
+      tempLink.href = url;
+      tempLink.setAttribute('download', file.name);
+      tempLink.click();
+
+      this.href = url;
+      this.target = '_blank';
+
+      // target filename
+      this.download = file.name;
     };
     reader.readAsArrayBuffer(file);
-    // const buffer = Buffer.from(reader.readAsText(file));
-    // console.log(buffer);
-    // console.log(typeof buffer);
-    // console.log(buffer.isEncoding('utf8'));
-    // const originalEncoding = detectCharacterEncoding(buffer);
-    // legacy.decode(buffer, originalEncoding.encoding, { 'mode': 'fatal' });
-    // console.log(`Encoding successfully changed from ${originalEncoding.encoding} to ${detectCharacterEncoding(buffer).encoding}.`);
   }
 
   render() {
